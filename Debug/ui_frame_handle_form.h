@@ -568,7 +568,7 @@ public:
 
         retranslateUi(Frame_Handle_Form);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Frame_Handle_Form);
@@ -606,7 +606,7 @@ public:
         label_9->setText(QApplication::translate("Frame_Handle_Form", "\345\220\210\346\210\220\345\270\247\347\216\207:", Q_NULLPTR));
         mode4_rate_btn->setText(QApplication::translate("Frame_Handle_Form", "\351\200\211\346\213\251", Q_NULLPTR));
         label_10->setText(QApplication::translate("Frame_Handle_Form", "\344\277\235\345\255\230\344\275\215\347\275\256:", Q_NULLPTR));
-        mode4_path_btn->setText(QApplication::translate("Frame_Handle_Form", "\346\265\217\350\247\210", Q_NULLPTR));
+        mode4_path_btn->setText(QApplication::translate("Frame_Handle_Form", "\351\200\211\346\213\251", Q_NULLPTR));
         mode4_ok_btn->setText(QApplication::translate("Frame_Handle_Form", "\347\241\256\345\256\232", Q_NULLPTR));
         mode4_empty_btn->setText(QApplication::translate("Frame_Handle_Form", "\346\270\205\347\251\272", Q_NULLPTR));
         mode1_btn->setText(QApplication::translate("Frame_Handle_Form", "\350\207\252\345\256\232\344\271\211\346\213\206\345\270\247", Q_NULLPTR));

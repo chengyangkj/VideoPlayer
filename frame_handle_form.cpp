@@ -98,17 +98,17 @@ void Frame_Handle_Form::on_mode4_imgpath_btn_clicked()
 }
 void Frame_Handle_Form::on_mode4_path_btn_clicked()
 {
-    //模式4的视频位置浏览按钮
-    file_name = QFileDialog::getOpenFileName(this,tr("选择保存视频文件名"),".",
-                                                    tr("视频格式(*.avi *.mp4 *.flv *.mkv)"));
-    QFile file(file_name);
-    if(!file.open(QIODevice::ReadOnly))
-    {
-        return;
-    }
-    else{
+//    //模式4的视频位置浏览按钮
+//    file_name = QFileDialog::getOpenFileName(this,tr("选择保存视频文件名"),".",
+//                                                    tr("视频格式(*.avi *.mp4 *.flv *.mkv)"));
+//    QFile file(file_name);
+//    if(!file.open(QIODevice::ReadOnly))
+//    {
+//        return;
+//    }
+//    else{
 
-    }
+//    }
 }
 
 void Frame_Handle_Form::on_mode1_ok_btn_clicked()
