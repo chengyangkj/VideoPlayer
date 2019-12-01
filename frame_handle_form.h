@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
+#include <QStringList>
 using namespace cv;
 namespace Ui {
 class Frame_Handle_Form;
@@ -33,6 +34,7 @@ public:
     QLineEdit *mode1_text2;
     QLineEdit *mode3_text;
     QString Video_Path;
+    VideoCapture capture;
     int mode=-1;
 
 private slots:
@@ -51,6 +53,10 @@ private slots:
     void on_mode4_imgpath_btn_clicked();
 
     void on_mode4_path_btn_clicked();
+
+    void on_mode3_ok_btn_clicked();
+
+    void on_mode4_ok_btn_clicked();
 
 private:
     Ui::Frame_Handle_Form *ui;
@@ -160,7 +166,56 @@ private:
         bar->setVisible(false);
     }
 };
+//模式4的handle类
+class Model4 : public QRunnable
+{
+public:
+    Model4 (QString path,QString save_path,double rate,QProgressBar *bar)
+    {
+        this->path=path;
+        this->savepath=save_path;
+        this->bar=bar;
+        this->rate=rate;
+    }
 
+private:
+    QString path;
+    QString savepath;
+    QProgressBar *bar;
+    QDir dir;
+    double rate;
+    QStringList img_list;
+    double splittime;
+    QStringList nameFilters;
+    void run(){
+        bar->setVisible(true);
+        //获取文件夹下所有的文件
+        dir.setPath(path);
+        //设置读取的文件的格式
+        nameFilters << "*.jpg"<< "*.png"<< "*.tif";
+        dir.setFilter(QDir::Files | QDir::NoSymLinks); //设置类型过滤器，只为文件格式
+        dir.setNameFilters(nameFilters);
+        for (int i=0;i<dir.count();i++){
+            img_list.append(path+"/"+dir[i]);
+
+        }
+        img_list.sort();
+       Mat img = imread(img_list[0].toStdString());
+        VideoWriter *writer = new VideoWriter(savepath.toStdString(),
+          CV_FOURCC('m', 'p', '4', 'v'),rate,
+          Size(img.cols,img.rows));
+
+        for(int i =0;i<img_list.size();i++){
+            img = imread(img_list[i].toStdString());
+            writer->write(img);
+            // 百分比，并强转为 float
+            int percent = (int) i / img_list.size();
+            QMetaObject::invokeMethod(bar, "setValue", Qt::QueuedConnection, Q_ARG(int, percent*100));
+        }
+         bar->setVisible(false);
+
+    }
+};
 #endif // FRAME_HANDLE_FORM_H
 
 

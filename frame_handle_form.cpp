@@ -74,14 +74,10 @@ void Frame_Handle_Form::on_mode2_path_btn_clicked()
 void Frame_Handle_Form::on_mode3_path_btn_clicked()
 {
     //模式3的浏览按钮
-    QString file_path = QFileDialog::getExistingDirectory(this, "请选择文件保存路径...", "./");
-    if(file_path.isEmpty())
-    {
-        return;
-    }
-    else{
-        ui->mode3_path_text->setText(file_path);
-    }
+    QString reSave_path = QFileDialog::getSaveFileName(this,tr("保存为"),"","普通图像(*.jpg *.png *.bmp);;遥感图像(*.tif)"); //选择路径
+       ui->mode3_path_text->setText(reSave_path);
+
+
 }
 
 void Frame_Handle_Form::on_mode4_imgpath_btn_clicked()
@@ -98,17 +94,14 @@ void Frame_Handle_Form::on_mode4_imgpath_btn_clicked()
 }
 void Frame_Handle_Form::on_mode4_path_btn_clicked()
 {
-//    //模式4的视频位置浏览按钮
-//    file_name = QFileDialog::getOpenFileName(this,tr("选择保存视频文件名"),".",
-//                                                    tr("视频格式(*.avi *.mp4 *.flv *.mkv)"));
-//    QFile file(file_name);
-//    if(!file.open(QIODevice::ReadOnly))
-//    {
-//        return;
-//    }
-//    else{
+    //模式4的视频位置浏览按钮
+    QString file_name = QFileDialog::getSaveFileName(this,tr("选择保存视频文件名"),".",
+                                                tr("视频格式(*.avi *.mp4 *.flv *.mkv)"));
 
-//    }
+
+    ui->mode4_path_text->setText(file_name);
+    QFile file(file_name);
+
 }
 
 void Frame_Handle_Form::on_mode1_ok_btn_clicked()
@@ -141,6 +134,27 @@ void Frame_Handle_Form::on_mode2_ok_btn_clicked()
   QThreadPool::globalInstance()->start(m2_task);
 }
 
+
+void Frame_Handle_Form::on_mode3_ok_btn_clicked()
+{
+    //截取单帧保存按钮
+    capture.open(Video_Path.toStdString());
+    capture.set(0,ui->mode3_time_text->text().toInt());
+    Mat frame;
+    capture.read(frame);
+    ui->progressBar_3->setVisible(true);
+    ui->progressBar_3->setValue(0);
+    imwrite(ui->mode3_path_text->text().toStdString(),frame);
+    ui->progressBar_3->setValue(100);
+    ui->progressBar_3->setVisible(false);
+}
+void Frame_Handle_Form::on_mode4_ok_btn_clicked()
+{
+    //帧合成视频确定按钮
+    Model4 *m4_task = new Model4(ui->mode4_imgpath_text->text(),ui->mode4_path_text->text(),ui->mode4_rate_text->text().toDouble(),ui->progressBar_4);
+   QThreadPool::globalInstance()->start(m4_task);
+
+}
 Frame_Handle_Form::~Frame_Handle_Form()
 {
     delete ui;
@@ -168,8 +182,4 @@ void Frame_Handle_Form::mode_switch(){
 
 
 }
-
-
-
-
 
