@@ -30,7 +30,7 @@ public:
     Video_Player *player=NULL;
 private:
     Ui::Video_Form *ui;
-    Frame_Handle_Form *frame_hanle_from;
+    Frame_Handle_Form *frame_hanle_from=NULL;
      QString file_name;
 private slots:
     void Open_video_Slot();
@@ -41,6 +41,7 @@ private slots:
     void on_slider_sliderMoved(int position);
     void on_slider_sliderPressed();
     void on_choose_btn_clicked();
+
 };
 
 #endif // VIDEO_FORM_H

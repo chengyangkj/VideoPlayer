@@ -145,9 +145,10 @@ private:
         while (capture.read(image)) {
             double time = capture.get(0);
             long curr = (long) capture.get(1);
+            double currs = curr;
             // 百分比，并强转为 float
-            int percent = (int) curr / total;
-            QMetaObject::invokeMethod(bar, "setValue", Qt::QueuedConnection, Q_ARG(int, percent*100));
+            int percent = (currs / total)*100;
+            QMetaObject::invokeMethod(bar, "setValue", Qt::QueuedConnection, Q_ARG(int, percent));
             qDebug()<<"当前时间："+QString::number(time);
 
             if (int(time) % int(splittime) == 0) {
@@ -208,9 +209,11 @@ private:
         for(int i =0;i<img_list.size();i++){
             img = imread(img_list[i].toStdString());
             writer->write(img);
+            double curr = i;
             // 百分比，并强转为 float
-            int percent = (int) i / img_list.size();
-            QMetaObject::invokeMethod(bar, "setValue", Qt::QueuedConnection, Q_ARG(int, percent*100));
+            int percent =  (curr / img_list.size())*100;
+            qDebug()<<curr / img_list.size()<<" "<<percent<<endl;
+            QMetaObject::invokeMethod(bar, "setValue", Qt::QueuedConnection, Q_ARG(int, percent));
         }
          bar->setVisible(false);
 

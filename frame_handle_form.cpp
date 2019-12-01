@@ -152,7 +152,7 @@ void Frame_Handle_Form::on_mode4_ok_btn_clicked()
 {
     //帧合成视频确定按钮
     Model4 *m4_task = new Model4(ui->mode4_imgpath_text->text(),ui->mode4_path_text->text(),ui->mode4_rate_text->text().toDouble(),ui->progressBar_4);
-   QThreadPool::globalInstance()->start(m4_task);
+    QThreadPool::globalInstance()->start(m4_task);
 
 }
 Frame_Handle_Form::~Frame_Handle_Form()
